@@ -1,16 +1,14 @@
 import libtcodpy as libtcod
 
+from entity import Entity
+
 #actual size of the window
 SCREEN_WIDTH = 80
 SCREEN_HEIGHT = 50
-
-LIMIT_FPS = 20  #20 frames-per-second maximum
-
  
 def handle_keys():
     global playerx, playery
         
-    #key = libtcod.console_check_for_keypress()  #real-time
     key = libtcod.console_wait_for_keypress(True)  #turn-based
     
     if key.vk == libtcod.KEY_ENTER and key.lalt:
@@ -22,16 +20,16 @@ def handle_keys():
     
     #movement keys
     if libtcod.console_is_key_pressed(libtcod.KEY_UP):
-        playery -= 1
+        player.move(0, -1)
 
     elif libtcod.console_is_key_pressed(libtcod.KEY_DOWN):
-        playery += 1
+        player.move(0, 1)
             
     elif libtcod.console_is_key_pressed(libtcod.KEY_LEFT):
-        playerx -= 1
+        player.move(-1, 0)
             
     elif libtcod.console_is_key_pressed(libtcod.KEY_RIGHT):
-        playerx += 1
+        player.move(1, 0)
             
  
 #############################################
@@ -40,21 +38,31 @@ def handle_keys():
  
 libtcod.console_set_custom_font(b'arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
 libtcod.console_init_root(SCREEN_WIDTH, SCREEN_HEIGHT, b'python/libtcod tutorial', False)
-libtcod.sys_set_fps(LIMIT_FPS)
 
-playerx = SCREEN_WIDTH//2
-playery = SCREEN_HEIGHT//2
+# Define an off-screen console called con, just in case we want to mess
+# with transparency, etc.
+con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+player = Entity(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, b'@', libtcod.white, con)
+npc = Entity(SCREEN_WIDTH//2 + 3, SCREEN_HEIGHT//2, b'@', libtcod.yellow, con)
+
+entities = [player, npc]
 
 while not libtcod.console_is_window_closed():
         
-    libtcod.console_set_default_foreground(0, libtcod.white)
-    libtcod.console_put_char(0, playerx, playery, b'@', libtcod.BKGND_NONE)
+    for entity in entities:
+        entity.draw()
     
+    # Since we are drawing to an off-screen console, we need to "blit"
+    # it to the actual console - this just means we copy it over
+    libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
+    # This flushes the changes in the console to the screen itself
     libtcod.console_flush()
     
-    libtcod.console_put_char(0, playerx, playery, b' ', libtcod.BKGND_NONE)
+    for entity in entities:
+        entity.clear()
     
     #handle keys and exit game if needed
     exit = handle_keys()
     if exit:
-            break
+        break

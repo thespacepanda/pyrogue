@@ -34,19 +34,9 @@ class Stamp:
                                      entity.char, libtcod.BKGND_NONE)
         self.blit()
         self.flush()
-        #self.clear()
-        
+
     def clear(self):
-        """
-        Iterates through self.entities and clears the position they
-        are at - this needs to be called after the virtual console is
-        blitted to the real console, and the real console is flushed
-        to the screen. This makes sure that the entities only show in
-        their true position every turn.
-        """
-        for entity in self.entities:
-            libtcod.console_put_char(self.console, entity.x, entity.y,
-                                    b' ', libtcod.BKGND_NONE)
+        libtcod.console_clear(self.console)
         
     def blit(self):
         libtcod.console_blit(self.console, 0, 0, self.SCREEN_WIDTH,

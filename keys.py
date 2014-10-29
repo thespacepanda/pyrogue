@@ -14,16 +14,21 @@ def handleKeys(player):
         # M-Return (Alt+Enter) toggles fullscreen
         libtcod.console_set_fullscreen(not
                                        libtcod.console_is_fullscreen())
+        return False
     elif key.vk == libtcod.KEY_ESCAPE:
         return True # which we handle by exiting the game loop
     # Useful alias for a long fn name
     keyPressed = libtcod.console_is_key_pressed
     if keyPressed(libtcod.KEY_UP):
         player.move(0, -1)
+        return False
     elif keyPressed(libtcod.KEY_DOWN):
         player.move(0, 1)
+        return False
     elif keyPressed(libtcod.KEY_LEFT):
         player.move(-1, 0)
+        return False
     elif keyPressed(libtcod.KEY_RIGHT):
         player.move(1, 0)
+        return False
     

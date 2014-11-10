@@ -1,0 +1,18 @@
+* Project TODO
+We only have a couple of weeks left to finish this project; I would like to start meeting biweekly so that we can make headway and keep in communication.
+We need to spend today outlining the goals of the project as well as how we plan to implement them. I have been working on the design of our game over the weekend, and I would like for us to arrive at the design together.
+* Algorithms
+** What is an algorithm?
+** Let's make an algorithm on the board for baking a cake
+** We need an algorithm for our game (in total)
+* Data Structures
+** What are data structures?
+** Let's make a data structure on the board for a pantry
+** We need to decide which data structures we need for the game and how to implement them
+* Game Loop
+** What is a game loop?
+Unlike the other programs we have made, a game is supposed to run indefinitely (at least until we tell it to stop!), because it isn't calculating anything - what the game is doing is interacting with the player.
+** What goes in a game loop?
+Games have state - that is, they have stored information. Functions (at least pure ones) do not have state. They do not *have* anything, they *do* something. The game loop should update this state to reflect the interaction with the player, and then draw the state to the screen so that we can see it.
+** What is FPS?
+I'm sure all of you have played games before, and many of you will have heard of FPS (Frames per Second). This simply means how many times the game loop draws the game's state to the screen. Since the loop draws to the screen once every iteration, we can think of this as how many times the game loop itself executes. (Hint: a frame is a still picture - all games essentially take photographs of the world and print the photographs to the screen, they just take enough photographs that your brain can't tell the difference between

@@ -31,4 +31,3 @@ def handleKeys(player):
     elif keyPressed(libtcod.KEY_RIGHT):
         player.move(1, 0)
         return False
-    

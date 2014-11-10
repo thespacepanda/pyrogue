@@ -1,17 +1,22 @@
-import libtcodpy as libtcod
+"""
+    pyrogue.entity
+    ~~~~~~~~~~~~~~
 
-class Entity():
-    """
-    This class represents anything that can be drawn as a character on
-    the screen - the player, a monster, a potion, etc.
-    """
-    def __init__(self, x, y, char, color):
-        self.x = x
-        self.y = y
-        self.char = char
+    This module represents drawable objects which can be interacted with.
+"""
+
+#from pyrogue.drawable import Drawable
+
+class Entity(object):
+    """This takes a character, a color, and a map_position"""
+    def __init__(self, character, color, pos):
+        # Entities block eachother and light
+        self.character = character
         self.color = color
-
-    def move(self, dx, dy):
-        # move by a given change in x and y
-        self.x += dx
-        self.y += dy
+        self.opaque = True
+        self.obstacle = True
+        self.pos = pos
+    def move(self, vector):
+        dx, dy = vector
+        x, y = self.pos
+        self.pos = (x+dx, y+dy)

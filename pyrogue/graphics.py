@@ -13,14 +13,14 @@ class Stamp:
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.console = libtcod.console_new(self.SCREEN_WIDTH,
-                                           self.SCREEN_HEIGHT)         
+                                           self.SCREEN_HEIGHT)
         libtcod.console_set_custom_font(b'arial10x10.png',
                                         libtcod.FONT_TYPE_GREYSCALE |
                                         libtcod.FONT_LAYOUT_TCOD)
         libtcod.console_init_root(self.SCREEN_WIDTH, self.SCREEN_HEIGHT,
                                   b'python/libtcod tutorial', False)
 
-        
+
     def draw(self):
         """
         Iterates through self.entities and draws each to the virtual
@@ -31,13 +31,13 @@ class Stamp:
             libtcod.console_set_default_foreground(self.console,
                                                    entity.color)
             libtcod.console_put_char(self.console, entity.x, entity.y,
-                                     entity.char, libtcod.BKGND_NONE)
+                                     entity.character, libtcod.BKGND_NONE)
         self.blit()
         self.flush()
 
     def clear(self):
         libtcod.console_clear(self.console)
-        
+
     def blit(self):
         libtcod.console_blit(self.console, 0, 0, self.SCREEN_WIDTH,
                              self.SCREEN_HEIGHT, 0, 0, 0)
@@ -59,5 +59,3 @@ class Stamp:
             return True
         except ValueError:
             return False
-                        
-    

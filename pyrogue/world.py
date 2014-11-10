@@ -25,14 +25,21 @@ class World(object):
         self.entities = [self.player]
     def _starting_pos(self):
         """This puts the player beside some upward stairs"""
-        stairs = (pos for pos in self._map.current_level.down_stairs)
+        stairs = (pos for pos in self._map.current_level.up_stairs)
         for stair in stairs:
             for position in self._map.get_adjacents(stair):
                 if self._map.is_empty(position):
                     return position
         raise Exception("Nowhere to put player...")
     def update(self):
-        pass
+        self.blocked_tiles = []
+        for entity in self.entities:
+            self.blocked_tiles.append(entity.pos)
+        for position, tile in self.tiles.items():
+            if tile.obstacle:
+                self.blocked_tiles.append(position)
+    def blocked(self, pos):
+        return pos in self.blocked_tiles
 
 class Map(object):
     """The game map, over all the levels."""
@@ -62,25 +69,29 @@ class Level(object):
         self.empty_tiles = []
         self.carve_level()
         if down_stairs is None:
-            generator = self.stair_gen()
-            self.down_stairs = [pos for pos in generator]
-        self.stairs = []
+            generator = self.stair_gen("up")
+            self.up_stairs = [pos for pos in generator]
+        self.down_stairs = self.stair_gen("down")
     def carve_level(self):
         self.tiles = {}
         for width in range(constants.MAP_WIDTH):
             for height in range(constants.MAP_HEIGHT):
                 # Fill map with unblocked tiles
-                self.tiles[(width, height)] = tile.Tile(False)
+                self.tiles[(width, height)] = tile.Floor()
                 self.empty_tiles.append((width, height))
-        self.tiles[(30, 22)] = tile.Tile(True)
-        self.tiles[(50, 22)] = tile.Tile(True)
+        self.tiles[(30, 22)] = tile.Wall()
+        self.tiles[(50, 22)] = tile.Wall()
     def is_empty(self, position):
         return position in self.empty_tiles
-    def stair_gen(self):
+    def stair_gen(self, direction):
+        if direction == "up":
+            stair = tile.UpStair
+        else:
+            stair = tile.DownStair
         stairs = []
         for _ in range(self.stair_limit):
             new_stair = random.choice(self.empty_tiles)
             stairs.append(new_stair)
-            self.tiles[(new_stair)] = tile.Tile(True)
+            self.tiles[(new_stair)] = stair()
             self.empty_tiles.remove(new_stair)
         return stairs

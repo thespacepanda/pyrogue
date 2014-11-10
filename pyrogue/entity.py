@@ -16,7 +16,9 @@ class Entity(object):
         self.opaque = True
         self.obstacle = True
         self.pos = pos
-    def move(self, vector):
+    def move(self, vector, world):
         dx, dy = vector
         x, y = self.pos
-        self.pos = (x+dx, y+dy)
+        new_pos = (x+dx, y+dy)
+        if not world.blocked(new_pos):
+            self.pos = new_pos

@@ -18,7 +18,7 @@ def main():
     while not libtcod.console_is_window_closed():
         world.update()
         painter.paint(world)
-        player.interact()
+        player.interact(world)
         if player.exit:
             break
         painter.new_canvas()

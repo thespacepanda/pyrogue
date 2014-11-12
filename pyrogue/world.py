@@ -6,12 +6,12 @@
     outside of player input and drawing to the screen.
 """
 
-import libtcodpy as libtcod
+import pyrogue.libtcodpy as libtcod
 
-import player
-import tile
-import constants
-import colors
+import pyrogue.player
+import pyrogue.tile
+import pyrogue.constants
+import pyrogue.colors
 
 import random
 
@@ -22,7 +22,7 @@ class World(object):
         starting_pos = self._starting_pos()
         self.player = player.Player(starting_pos)
         self.tiles = self._map.current_level.tiles
-        self.entities = [self.player]
+        self.entities = {starting_pos: self.player}
     def _starting_pos(self):
         """This puts the player beside some upward stairs"""
         stairs = (pos for pos in self._map.current_level.up_stairs)
@@ -32,14 +32,9 @@ class World(object):
                     return position
         raise Exception("Nowhere to put player...")
     def update(self):
-        self.blocked_tiles = []
-        for entity in self.entities:
-            self.blocked_tiles.append(entity.pos)
-        for position, tile in self.tiles.items():
-            if tile.obstacle:
-                self.blocked_tiles.append(position)
+        pass
     def blocked(self, pos):
-        return pos in self.blocked_tiles
+        return not self._map.is_empty(pos) or pos in self.entities
 
 class Map(object):
     """The game map, over all the levels."""
@@ -53,8 +48,8 @@ class Map(object):
         pos_x, pos_y = position
         return ((a, b) for a in range(pos_x-1, pos_x+2)
                 for b in range(pos_y-1, pos_y+2)
-                if a != pos_x or b != pos_y
-                and a >= 0 and b >= 0)
+                if (a != pos_x or b != pos_y)
+                and (a >= 0 and b >= 0))
     def is_empty(self, position):
         return self.current_level.is_empty(position)
     def next_level(self):
@@ -66,7 +61,6 @@ class Level(object):
     """A single level, has more meta-data than just a matrix."""
     def __init__(self, down_stairs=None):
         self.stair_limit = 4
-        self.empty_tiles = []
         self.carve_level()
         if down_stairs is None:
             generator = self.stair_gen("up")
@@ -78,20 +72,19 @@ class Level(object):
             for height in range(constants.MAP_HEIGHT):
                 # Fill map with unblocked tiles
                 self.tiles[(width, height)] = tile.Floor()
-                self.empty_tiles.append((width, height))
         self.tiles[(30, 22)] = tile.Wall()
         self.tiles[(50, 22)] = tile.Wall()
     def is_empty(self, position):
-        return position in self.empty_tiles
+        return not self.tiles[position].obstacle
     def stair_gen(self, direction):
         if direction == "up":
             stair = tile.UpStair
         else:
             stair = tile.DownStair
         stairs = []
+        empty_tiles = [tile for tile in self.tiles if self.is_empty(tile)]
         for _ in range(self.stair_limit):
-            new_stair = random.choice(self.empty_tiles)
+            new_stair = random.choice(empty_tiles)
             stairs.append(new_stair)
             self.tiles[(new_stair)] = stair()
-            self.empty_tiles.remove(new_stair)
         return stairs

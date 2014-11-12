@@ -5,10 +5,10 @@
     This handles interaction from the player.
 """
 
-import libtcodpy as libtcod
+import pyrogue.libtcodpy as libtcod
 
-from entity import Entity
-import colors
+from pyrogue.entity import Entity
+import pyrogue.colors
 
 class Player(Entity):
     """
@@ -28,14 +28,17 @@ class Player(Entity):
         }
     def interact(self, world):
         """Handles key input."""
-        key = libtcod.console_wait_for_keypress(True)
-        func, val = self.key_map[key.vk]
-        if val is None:
-            val = key
-        if func == self.move:
-            func(val, world)
-        else:
-            func(val)
+        key = libtcod.console_check_for_keypress(True)
+        try:
+            func, val = self.key_map[key.vk]
+            if val is None:
+                val = key
+            if func == self.move:
+                func(val, world)
+            else:
+                func(val)
+        except KeyError:
+            pass
     def quit(self, sure):
         """Sets self.exit to True so that we can exit."""
         if sure:

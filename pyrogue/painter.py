@@ -28,8 +28,8 @@ class Painter(object):
             x, y = position
             libtcod.console_set_default_foreground(self.console, tile.color)
             libtcod.console_put_char(self.console, x, y, tile.character, libtcod.BKGND_NONE)
-        for entity in world.entities:
-            x, y = entity.pos
+        for position, entity in world.entities.items():
+            x, y = position
             libtcod.console_set_default_foreground(self.console, entity.color)
             libtcod.console_put_char(self.console, x, y, entity.character,
                                      libtcod.BKGND_NONE)

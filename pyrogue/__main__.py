@@ -2,10 +2,11 @@
     pyrogue.__main__
     ~~~~~~~~~~~~~~~~
 
-    This runs the game Pyrogue when it is called as a package.
+    This only exists so that we can call the directory pyrogue/
+    directly, we put our actual main code in the more reasonably named
+    pyrogue.main
 """
 
-import main
+import pyrogue.main as main
 
-if __name__ == "__main__":
-    main.main()
+main.main()

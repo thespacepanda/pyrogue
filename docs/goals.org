@@ -17,3 +17,24 @@ To be considered a success the game must adhere to all hard requirements and ful
 
 * Measure of Failure
 The project will be considered a failure if it does not meet the hard requirements or if it is not enjoyable for our team to play.
+
+* Tech goals
+** Define Technology Needs
+Implementation language and development environment must be cross platform
+Unit testing to ensure correctness
+Flexible and high level console input and output
+Cross platform and human writable/readable file format
+Game Engine
+** Build v Acquire
+Implementing a programming language or development environment are obviously outside of the scope of this project, so we will acquire them.
+Unit testing could go either way, but I would prefer to acquire this so we can focus on the development of the game itself.
+Console input and output is again outside our scope and a large undertaking - acquire.
+The file format is tricky - there are many to choose from, but I think designing one will also be outside of our scope and discourage input from modders (they will not want to learn a new format just for our game), so I'm leaning on acquire for this as well.
+Implementing the game engine is arguably the purpose of this project so we will be building this ourselves.
+** Select Acquisitions
+Implementation Language - Python, not only because it fulfills all of our requirements, but because it is the only language we are allowed to use :p
+Development Environment - This is kind of a personal choice, really. I am using emacs, which fulfills all of the requirements, but has a rather high learning curve. I have suggested either Sublime Text or Notepad++ because they are simpler and also fulfill the requirements (though I don't think Notepad++ is cross platform, not that that really matters since most of you only use windows throughout the day, and don't need to write on a mac very often or anything. If you need help in this area ask me).
+Unit testing - with python we have unittest and nose. They are really the same thing, but I would like to use nose as it makes it easier to write unit tests and integrates well with travisci.
+Console input and output - for this we will be using libtcod, also called the droyen library, simply because it fulfills all of our requirements, has bindings for python, and is really easy to use.
+File format - I think JSON is a good fit for this because it is ubiquitous and easy to understand. If need be, we can switch this out later.
+Game engine - obviously this is what we will be building and we will ensure that it meets our requirements.

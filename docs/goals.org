@@ -1,0 +1,19 @@
+This document exists to define the goals of our project, the scope, how we will measure success, and how we will measure failure
+
+* Goals
+To make a cross platform, text based game with a cyberpunk setting. Game play should be thoughtful and strategic and yet have elements of survival horror games as well. The pace should be slow enough that the player has time to think about his actions, but not so slow as to remove the element of fear. The game should be simple to understand, yet challenging to complete, and offer strong replay-ability through randomization. The game must be cross platform, portable, and self-contained. It must run on low-end hardware. The game should also be modifiable through configuration files.
+** Hard Requirements
+ASCII Text only (for now)
+Support saving and loading games
+Support recording and playback of games and partial games
+Cross Platform
+Playable on low-end hardware (my laptop; I also have a PowerPC Mac from early 2000s to test on)
+
+* Scope
+The scope of this project will be to create the game and its configuration/extension capabilities and all hard requirements. Scope may be extended to include optional requirements and stretch goals as well.
+
+* Measure of Success
+To be considered a success the game must adhere to all hard requirements and fulfill all goals outlined here. The measure of success will be based on how much our group enjoys playing the game.
+
+* Measure of Failure
+The project will be considered a failure if it does not meet the hard requirements or if it is not enjoyable for our team to play.

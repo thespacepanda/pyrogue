@@ -5,10 +5,9 @@
     This module handles all painting to the screen.
 """
 
-import libtcodpy as libtcod
+import pyrogue.libtcodpy as libtcod
 
-import constants
-import colors
+import pyrogue.constants as constants
 
 class Painter(object):
     """This takes a world and prints it to the screen."""

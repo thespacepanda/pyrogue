@@ -5,10 +5,10 @@
     This handles interaction from the player.
 """
 
-import libtcodpy as libtcod
+import pyrogue.libtcodpy as libtcod
 
-from entity import Entity
-import colors
+from pyrogue.entity import Entity
+import pyrogue.colors as colors
 
 class Player(Entity):
     """
@@ -16,7 +16,7 @@ class Player(Entity):
     functionality offered by pyrogue.actor.Actor.
     """
     def __init__(self, pos):
-        super().__init__(b'@', colors.white, pos)
+        super().__init__(b'@', colors.WHITE, pos)
         self.exit = False
         self.key_map = {
             libtcod.KEY_UP: (self.move, (0, -1)),

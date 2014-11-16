@@ -6,12 +6,9 @@
     outside of player input and drawing to the screen.
 """
 
-import libtcodpy as libtcod
-
-import player
-import tile
-import constants
-import colors
+import pyrogue.player as player
+import pyrogue.tile as tile
+import pyrogue.constants as constants
 
 import random
 

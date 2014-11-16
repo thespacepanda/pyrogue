@@ -1,0 +1,36 @@
+This document outlines the overall design of our project, how we will implement it, and how we will test it
+
+* Mile high view
+Since our project is a game which has interaction from the player, the main function our game will call must loop indefinitely until the player decides to quit. We will call this our game loop. Note that the loop doesn't have to explicitly exist in main.py, but it must be called and we must know its general design before we do anything else.
+** Game Loop
+This loop is, all in all, pretty simple. We need to get input from the player, act on that input, update all the game entities, and then draw the changed world to the screen. It will probably end up looking like this:
+
+#+begin_src python
+while game_is_not_closed:
+    player.update()
+    world.update()
+    painter.paint(world)
+#+end_src
+
+This is pretty simple, but it contrasts with what we have now in that we are not explicitly calling an input function. I have decided it would be better if we used an Entity Component system, since the class hierarchy is getting a little unwieldy. This essentially means that our game objects will be bags for components, which will have the real functionality (i.e. the player is a game object with an input component, a health component, etc.), and the update function will simply call the update function on all of the entity's components. I'll get into this more later.
+It stands to reason that world.update() updates all the entities in the world (or at least on the current level), and that the call to painter.paint iterates through all of the tiles in the player's FOV and that he has already explored and draws them to the screen.
+
+* Entity Component System
+This model of design contrasts with traditional object oriented design (large class hierarchies) in that game objects are simply a collection of components, which in turn have functionality, instead of the entities themselves having functionality. For instance, the player object doesn't handle input itself - it owns an input component which handles input. This allows us to decouple functionality from the objects that need it - we can then test this functionality or add new functionality fairly easily. This also makes our game objects really simple, they would probably be something like this:
+
+#+begin_src python
+class Entity(object):
+    """The base game object."""
+    def __init__(self):
+        # initialize components/controllers here
+    def update(self):
+        for component in self.components:
+            component.update()
+#+end_src
+
+Our entities are really simple, and that's how it should be. All of the actual logic (even setting up fields) should go in the components. This allows us to reuse the common code and test components independently of the entities they are attached to.
+
+* Parts of our system
+So our game definitely has a few distinct parts. There are Entities, which are really just containers of Components. Then there is the game's World itself, which contains all of our Entities, as well as the Map which is a list of Levels, which is a 2x2 matrix of Tiles. Finally, we have a Painter, which takes our World and paints the important parts to the screen.
+
+**

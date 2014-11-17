@@ -1,6 +1,6 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
+pyrogue/__pycache__/
+pyrogue/*.py[cod]
 
 # C extensions
 *.so

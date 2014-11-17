@@ -46,7 +46,7 @@ def test_generator_instantiation():
         for row in range(mock_map.height):
             if mock_map[column, row].get_visited():
                 visited_count += 1
-    assert visited_count == 2
+    assert visited_count == 100
 
 def test_has_adjacent_in_direction():
     """

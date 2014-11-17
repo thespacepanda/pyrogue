@@ -101,6 +101,10 @@ class Map(object):
         new_point = add_points(point, direction)
         return self[new_point].get_visited()
 
+    def all_cells_visited(self):
+        """Queries whether we have visited all cells in the map."""
+        return len(self.visited_cells) == (self.width * self.height)
+
     def __iter__(self):
         return self.cells.__iter__()
 
@@ -123,26 +127,27 @@ class Generator(object):
         self.map.mark_cells_unvisited()
         self.current_cell = self.map.random_mark_visited()
 
-        direction_gen = directions()
-        direction = direction_gen.__next__()
+        while not self.map.all_cells_visited():
+            direction_gen = directions()
+            direction = direction_gen.__next__()
 
-        while (not self.map.has_adjacent_in_direction(
+            while (not self.map.has_adjacent_in_direction(
+                    self.current_cell, direction
+            )) or self.map.adjacent_in_direction_visited(
                 self.current_cell, direction
-        )) or self.map.adjacent_in_direction_visited(
-            self.current_cell, direction
-        ):
-            try:
-                direction = direction_gen.__next__()
-            except StopIteration:
-                self.current_cell = self.map.random_visited_cell(
-                    self.current_cell
-                )
-                direction_gen = directions()
-                direction = direction_gen.__next__()
+            ):
+                try:
+                    direction = direction_gen.__next__()
+                except StopIteration:
+                    self.current_cell = self.map.random_visited_cell(
+                        self.current_cell
+                    )
+                    direction_gen = directions()
+                    direction = direction_gen.__next__()
 
-        self.current_cell = self.map.corridor(self.current_cell,
-                                              direction)
-        self.map.visited(self.current_cell)
+            self.current_cell = self.map.corridor(self.current_cell,
+                                                  direction)
+            self.map.visited(self.current_cell)
 
         return self.map
 

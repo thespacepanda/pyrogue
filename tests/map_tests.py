@@ -16,7 +16,7 @@ def test_mark_cells_unvisited():
 
     for column in range(mock_map.width):
         for row in range(mock_map.height):
-            assert mock_map[column, row] is False
+            assert mock_map[column, row].get_visited() is False
 
 def test_random_mark_visited():
     """
@@ -29,7 +29,7 @@ def test_random_mark_visited():
     visited_count = 0
     for column in range(mock_map.width):
         for row in range(mock_map.height):
-            if mock_map[column, row]:
+            if mock_map[column, row].get_visited():
                 visited_count += 1
 
     assert visited_count == 1
@@ -44,9 +44,9 @@ def test_generator_instantiation():
     visited_count = 0
     for column in range(mock_map.width):
         for row in range(mock_map.height):
-            if mock_map[column, row]:
+            if mock_map[column, row].get_visited():
                 visited_count += 1
-    assert visited_count == 1
+    assert visited_count == 2
 
 def test_has_adjacent_in_direction():
     """
@@ -151,3 +151,19 @@ def test_get_random_visited():
 
     # check that the visited_cell is one of the others
     assert visited_cell in other_visited_cells
+
+def test_corridor():
+    mock_map = m.Map(10, 10)
+    mock_map.mark_cells_unvisited()
+
+    mock_map.corridor((0, 0), m.SOUTH)
+
+    assert mock_map[0, 0].north_side
+    assert not mock_map[0, 0].south_side
+    assert mock_map[0, 0].east_side
+    assert mock_map[0, 0].west_side
+
+    assert not mock_map[0, 1].north_side
+    assert mock_map[0, 1].south_side
+    assert mock_map[0, 1].east_side
+    assert mock_map[0, 1].west_side

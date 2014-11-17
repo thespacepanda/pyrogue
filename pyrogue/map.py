@@ -19,7 +19,7 @@ class Map(object):
         """This creates the map and marks all cells unvisited."""
         self.cells = [
             [
-                False for column in range(self.width)
+                Cell(False) for column in range(self.width)
             ]
             for row in range(self.height)
         ]
@@ -35,9 +35,9 @@ class Map(object):
         """Marks the given cell as visited."""
         if self.out_of_bounds(point):
             raise Exception("Point {} out of bounds.".format(point))
-        if self[point]:
+        if self[point].get_visited():
             raise Exception("Point {} already visited.".format(point))
-        self[point] = True
+        self[point].touch()
         self.visited_cells.append(point)
 
     def random_visited_cell(self, not_point):
@@ -50,6 +50,31 @@ class Map(object):
             maybe = random.choice(self.visited_cells)
         assert maybe != not_point
         return maybe
+
+    def corridor(self, point, direction):
+        """
+        Carves a corridor from the given point in the given direction.
+        """
+        if not self.has_adjacent_in_direction(point, direction):
+            raise Exception(
+                "No adjacent points in {}".format(direction)
+            )
+        target = add_points(point, direction)
+
+        if direction == NORTH:
+            self[point].north()
+            self[target].south()
+        elif direction == SOUTH:
+            self[point].south()
+            self[target].north()
+        elif direction == EAST:
+            self[point].east()
+            self[target].west()
+        elif direction == WEST:
+            self[point].west()
+            self[target].east()
+
+        return target
 
     def out_of_bounds(self, point):
         """
@@ -73,8 +98,8 @@ class Map(object):
         """
         if not self.has_adjacent_in_direction(point, direction):
             raise Exception("Adjacent point doesn't exist.")
-        column, row = add_points(point, direction)
-        return self.cells[column][row]
+        new_point = add_points(point, direction)
+        return self[new_point].get_visited()
 
     def __iter__(self):
         return self.cells.__iter__()
@@ -97,8 +122,10 @@ class Generator(object):
         """This handles the construction of our map and returns it."""
         self.map.mark_cells_unvisited()
         self.current_cell = self.map.random_mark_visited()
+
         direction_gen = directions()
         direction = direction_gen.__next__()
+
         while (not self.map.has_adjacent_in_direction(
                 self.current_cell, direction
         )) or self.map.adjacent_in_direction_visited(
@@ -107,15 +134,51 @@ class Generator(object):
             try:
                 direction = direction_gen.__next__()
             except StopIteration:
-                self.current_cell = self.map.random_visited_cell()
+                self.current_cell = self.map.random_visited_cell(
+                    self.current_cell
+                )
                 direction_gen = directions()
                 direction = direction_gen.__next__()
-        # TODO use valid direction for next step
+
+        self.current_cell = self.map.corridor(self.current_cell,
+                                              direction)
+        self.map.visited(self.current_cell)
+
         return self.map
 
     def get_current_cell(self):
         """Returns the current cell."""
         return self.current_cell
+
+class Cell(object):
+    """This class represents a single cell in the dungeon."""
+    def __init__(self, visited):
+        self.visited = visited # Boolean
+        self.north_side = True
+        self.south_side = True
+        self.east_side = True
+        self.west_side = True
+    def touch(self):
+        """Utility method for clearly setting visited to True."""
+        self.visited = True
+    def get_visited(self):
+        """Returns visited status."""
+        return self.visited
+    def set_visited(self, visited):
+        """Sets visited status to the passed value."""
+        self.visited = visited
+    def north(self, wall=False):
+        """Sets whether there's a wall to the north side"""
+        self.north_side = wall
+    def south(self, wall=False):
+        """Sets whether there's a wall to the south side"""
+        self.south_side = wall
+    def east(self, wall=False):
+        """Sets whether there's a wall to the east side"""
+        self.east_side = wall
+    def west(self, wall=False):
+        """Sets whether there's a wall to the west side"""
+        self.west_side = wall
 
 NORTH = (0, -1)
 SOUTH = (0, 1)

@@ -101,10 +101,10 @@ def test_adjacent_in_direction_visited():
     mock_map = m.Map(10, 10)
     mock_map.mark_cells_unvisited()
 
-    mock_map[1, 0] = True
-    mock_map[0, 1] = True
-    mock_map[1, 2] = True
-    mock_map[2, 1] = True
+    mock_map.visited((1, 0))
+    mock_map.visited((0, 1))
+    mock_map.visited((1, 2))
+    mock_map.visited((2, 1))
 
     assert mock_map.adjacent_in_direction_visited((1, 1), m.NORTH)
     assert mock_map.adjacent_in_direction_visited((1, 1), m.SOUTH)
@@ -135,3 +135,19 @@ def test_direction_gen():
         assert (direction in seen_directions) is False
         seen_directions.append(direction)
     assert len(seen_directions) == 4
+
+def test_get_random_visited():
+    mock_map = m.Map(10, 10)
+    mock_map.mark_cells_unvisited()
+
+    mock_map.visited((1, 0))
+    mock_map.visited((0, 1))
+    mock_map.visited((1, 2))
+    mock_map.visited((2, 1))
+
+    current_cell = (2, 1)
+    other_visited_cells = [(1, 0), (0, 1), (1, 2)]
+    visited_cell = mock_map.random_visited_cell(current_cell)
+
+    # check that the visited_cell is one of the others
+    assert visited_cell in other_visited_cells

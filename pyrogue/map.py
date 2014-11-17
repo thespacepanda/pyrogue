@@ -13,6 +13,7 @@ class Map(object):
         self.width = width
         self.height = height
         self.cells = [] # two-dimensional matrix
+        self.visited_cells = [] # list of points (tuples)
 
     def mark_cells_unvisited(self):
         """This creates the map and marks all cells unvisited."""
@@ -27,8 +28,28 @@ class Map(object):
         """This marks a random cell as visited."""
         column = random.randrange(self.width)
         row = random.randrange(self.height)
-        self.cells[column][row] = True
+        self.visited((column, row))
         return (column, row)
+
+    def visited(self, point):
+        """Marks the given cell as visited."""
+        if self.out_of_bounds(point):
+            raise Exception("Point {} out of bounds.".format(point))
+        if self[point]:
+            raise Exception("Point {} already visited.".format(point))
+        self[point] = True
+        self.visited_cells.append(point)
+
+    def random_visited_cell(self, not_point):
+        """Gets random visited cell that is not the one passed in."""
+        if len(self.visited_cells) == 0:
+            raise Exception("No visited cells.")
+        maybe = random.choice(self.visited_cells)
+        while maybe == not_point:
+            # a little non-deterministic, but it works
+            maybe = random.choice(self.visited_cells)
+        assert maybe != not_point
+        return maybe
 
     def out_of_bounds(self, point):
         """
@@ -78,6 +99,18 @@ class Generator(object):
         self.current_cell = self.map.random_mark_visited()
         direction_gen = directions()
         direction = direction_gen.__next__()
+        while (not self.map.has_adjacent_in_direction(
+                self.current_cell, direction
+        )) or self.map.adjacent_in_direction_visited(
+            self.current_cell, direction
+        ):
+            try:
+                direction = direction_gen.__next__()
+            except StopIteration:
+                self.current_cell = self.map.random_visited_cell()
+                direction_gen = directions()
+                direction = direction_gen.__next__()
+        # TODO use valid direction for next step
         return self.map
 
     def get_current_cell(self):

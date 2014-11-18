@@ -1,0 +1,48 @@
+# Ignore everything
+*
+
+<<<<<<< HEAD
+# Except what we want
+!.gitignore
+# Need the documentation
+!docs/
+!docs/*
+!README.md
+# And the tests
+!tests/
+!tests/*
+# And we need to ignore the cached .pyc files
+pyrogue/__pycache__/
+pyrogue/__pycache__/*
+!pyrogue/
+!pyrogue/*
+# We need the library files
+!arial10x10.png
+!libSDL-1.2.so.0
+!libtcod-mingw.dll
+!libtcod.so
+!SDL.dll
+!.travis.yml
+=======
+# Except the files we want
+# Main folder
+!.gitignore
+!README.md
+!arial10x10.png
+!LibSDL-1.2.so.0
+!libtcod.so
+!setup.py
+!SDL.dll
+!libtcod-mingw.dll
+# Documentation
+!docs/
+!docs/*
+# Code
+!pyrogue/
+!pyrogue/*
+!main.py
+!map.py
+# Tests
+!tests/
+
+>>>>>>> cleanslate

@@ -54,7 +54,7 @@ elif sys.platform.find('haiku') != -1:
     HAIKU = True
 else:
     try:
-        _lib = ctypes.cdll['../libtcod-mingw.dll']
+        _lib = ctypes.cdll['./libtcod-mingw.dll']
         MINGW=True
     except WindowsError:
         _lib = ctypes.cdll['./libtcod-VS.dll']

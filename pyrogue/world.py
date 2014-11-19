@@ -6,9 +6,9 @@
     outside of player input and drawing to the screen.
 """
 
-import pyrogue.player as player
-import pyrogue.tile as tile
-import pyrogue.constants as constants
+import player as player
+import tile as tile
+import constants as constants
 
 import random
 

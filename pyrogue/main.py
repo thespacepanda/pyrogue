@@ -5,10 +5,10 @@
     This runs the game Pyrogue.
 """
 
-import pyrogue.libtcodpy as libtcod
+import libtcodpy as libtcod
 
-from pyrogue.world import World
-from pyrogue.painter import Painter
+from world import World
+from painter import Painter
 
 
 def main():

@@ -5,7 +5,7 @@
     This module represents the attack component for game entities.
 """
 
-from pyrogue.component import Component
+from component import Component
 
 import random
 

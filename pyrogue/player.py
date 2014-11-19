@@ -5,10 +5,10 @@
     This handles interaction from the player.
 """
 
-import pyrogue.libtcodpy as libtcod
+import libtcodpy as libtcod
 
-from pyrogue.entity import Entity
-import pyrogue.colors as colors
+from entity import Entity
+import colors as colors
 
 class Player(Entity):
     """

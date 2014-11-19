@@ -5,7 +5,7 @@
     This module represents drawable objects which can be interacted with.
 """
 
-#from pyrogue.drawable import Drawable
+#from drawable import Drawable
 
 class Entity(object):
     """This takes a character, a color, and a map_position"""

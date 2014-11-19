@@ -5,6 +5,11 @@
     This handles field of vision for entities.
 """
 
+VIEW_RADIUS = 5
+
+from math import cos
+from math import sin
+
 # Essentially we are going to modify the entity class so that it
 # supports FOV - we will use a decorator, which is a higher-order
 # function (takes and returns a function or class).
@@ -43,8 +48,29 @@ def viewing(entity):
         """
         This method calculates the FOV every update.
         """
-        pass
+        float (x,y);
+        int (i);
+        CLEAR_MAP_TO_NOT_VISIBLE(); #Initially set all tiles to not visible.
+        for i in range(0,360,1):
+            x=cos(float(i*0.0174))
+            y=sin(float(i*0.0174))
+            DoFov(x,y)
+
+    def DoFov(x,y):
+        int (i)
+        float (ox,oy)
+        ox = float(PLAYERX+0.5);
+        oy = float(PLAYERY+0.5);
+        while i < VIEW_RADIUS:
+            MAP[int(ox)][int(oy)]=VISIBLE #Set the tile to visible.
+            if(MAP[int(ox)][int(oy)]==BLOCK):
+                return
+            ox+=x;
+            oy+=y;
+            i += 1
+
     # alternative syntax to use decorators - can also use @decorator
     # but only when defining the function.
     entity.update = add_hook(entity.update, fov)
     return entity
+

@@ -6,9 +6,11 @@
 """
 
 import libtcodpy as libtcod
+import constants as constants
 
 from world import World
 from painter import Painter
+
 
 
 def main():
@@ -16,6 +18,8 @@ def main():
     world = World()
     painter = Painter()
     player = world.player
+
+
     while not libtcod.console_is_window_closed():
         world.update()
         painter.paint(world)

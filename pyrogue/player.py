@@ -40,6 +40,8 @@ class Player(Entity):
                 func(val)
         except KeyError:
             pass
+
+            
     def quit(self, sure):
         """Sets self.exit to True so that we can exit."""
         if sure:

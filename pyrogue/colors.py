@@ -5,7 +5,7 @@
     This module defines the colors used throughout the project.
 """
 
-import libtcodpy as libtcod
+import pyrogue.libtcodpy as libtcod
 
 DARK_FLOOR = libtcod.Color(50, 50, 150)
 DARK_WALL = libtcod.Color(0, 0, 100)

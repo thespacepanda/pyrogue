@@ -1,4 +1,4 @@
-import libtcodpy as libtcod
+import pyrogue.libtcodpy as libtcod
 
 class Stamp:
     """

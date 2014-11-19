@@ -7,7 +7,7 @@
 
 import libtcodpy as libtcod
 
-import constants as constants
+import constants
 
 class Painter(object):
     """This takes a world and prints it to the screen."""

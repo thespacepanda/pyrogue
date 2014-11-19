@@ -6,9 +6,9 @@
     outside of player input and drawing to the screen.
 """
 
-import player as player
-import tile as tile
-import constants as constants
+import player
+import tile
+import constants
 
 import random
 

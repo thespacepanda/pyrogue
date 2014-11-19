@@ -18,7 +18,7 @@ class Point(object):
         self.y = y
     def distance(self, destination):
         """
-        This uses the pythagorean theorem to calculate the distance
+        This uses the Pythagorean theorem to calculate the distance
         from the given point. Be careful of rounding errors, returns
         a float.
         """

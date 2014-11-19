@@ -8,7 +8,8 @@
 import libtcodpy as libtcod
 
 from entity import Entity
-import colors as colors
+
+import colors
 
 class Player(Entity):
     """

@@ -1,4 +1,4 @@
-import pyrogue.libtcodpy as libtcod
+import libtcodpy as libtcod
 
 def handleKeys(player):
     """

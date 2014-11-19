@@ -5,15 +5,15 @@
     This handles interaction from the player.
 """
 
-import libtcodpy as libtcod
+import pyrogue.libtcodpy as libtcod
 
-from entity import Entity
-import colors as colors
+from pyrogue.entity import Entity
+import pyrogue.colors as colors
 
 class Player(Entity):
     """
     This represents the player - it handles keypresses as well as all of the
-    functionality offered by actor.Actor.
+    functionality offered by pyrogue.actor.Actor.
     """
     def __init__(self, pos):
         super().__init__(b'@', colors.WHITE, pos)

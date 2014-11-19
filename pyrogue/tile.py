@@ -6,7 +6,7 @@
     the environment and cannot be interacted with or destroyed.
 """
 
-import colors as colors
+import pyrogue.colors as colors
 
 class Tile(object):
     """This takes a character, a color, and a tuple as the map position"""

@@ -32,10 +32,12 @@ class Rect(object):
     position (class Point), and an int representing the width, and an
     int representing the height.
     """
-    def __init__(self, start, height, width):
+    def __init__(self, start, width, height):
         self.start = start
-        self.height = height
         self.width = width
+        self.height = height
+        self.area = None # Must initialize to None, we may not even
+        self.vertices = None # need these right away
     def get_area(self):
         """Calculates the area of the rectangle."""
         if self.area is None:
@@ -46,7 +48,7 @@ class Rect(object):
         if self.vertices is None:
             top_left = self.start
             top_right = Point(top_left.x + self.width, top_left.y)
-            bottom_left = Point(top_left.x, top_left.y - self.height)
+            bottom_left = Point(top_left.x, top_left.y + self.height)
             bottom_right = Point(top_right.x, bottom_left.y)
             self.vertices = (top_left, top_right,
                              bottom_left, bottom_right)

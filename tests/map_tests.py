@@ -92,3 +92,13 @@ class RectTest(unittest.TestCase):
             derived = self.rects[rect][1]
             derived_tuples = [(point.x, point.y) for point in derived]
             self.assertEqual(actual_tuples, derived_tuples)
+
+class CellTest(unittest.TestCase):
+    """
+    This class abstracts tests over the Cell class.
+    """
+    def setUp():
+        self.walls = [m.Cell(x, y) for x in range(10)
+                      for y in range(10)]
+        self.floors = [m.Cell(x, y) for x in range(10)
+                       for y in range(10)]

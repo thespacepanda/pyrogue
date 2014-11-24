@@ -1,7 +1,5 @@
 # Ignore everything
 *
-
-<<<<<<< HEAD
 # Except what we want
 !.gitignore
 # Need the documentation
@@ -15,7 +13,8 @@
 pyrogue/__pycache__/
 pyrogue/__pycache__/*
 !pyrogue/
-!pyrogue/*
+pyrogue/*.pyc
+!pyrogue/*.py
 # We need the library files
 !arial10x10.png
 !libSDL-1.2.so.0

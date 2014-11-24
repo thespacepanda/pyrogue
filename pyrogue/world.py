@@ -9,6 +9,7 @@
 import player
 import tile
 import constants
+import dungeon
 
 import random
 
@@ -18,7 +19,9 @@ class World(object):
         self._map = Map()
         starting_pos = self._starting_pos()
         self.player = player.Player(starting_pos)
-        self.tiles = self._map.current_level.tiles
+        #self.tiles = self._map.current_level.tiles
+        self.dungeon = dungeon.Dungeon()
+        self.tiles = self.dungeon.tiles
         self.entities = {starting_pos: self.player}
     def _starting_pos(self):
         """This puts the player beside some upward stairs"""

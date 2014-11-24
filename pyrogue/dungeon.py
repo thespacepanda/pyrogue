@@ -8,6 +8,7 @@
 from geometry import Rect, Point, to_point
 
 import constants
+import tile
 
 import random
 
@@ -76,7 +77,7 @@ class Dungeon(object):
         Bulk of generation algorithm; chooses random wall and
         builds adjacent room.
         """
-        while len(self._walls) > 0:
+        while len(self._rooms) < 100:
             # we will remove walls from the list once we build
             # beside them
             current_wall = to_wall(random.choice(self._walls))
@@ -97,6 +98,21 @@ class Dungeon(object):
                 print("couldn't add room")
                 print("WALLS: {}".format(len(self._walls)))
                 continue
+        self.finalize()
+    def finalize(self):
+        """
+        Turns us into an actual level.
+        """
+        self.tiles = {}
+        for x in range(constants.MAP_WIDTH + 1):
+            for y in range(constants.MAP_HEIGHT + 1):
+                self.tiles[(x, y)] = tile.Floor()
+                # Initialize map to all floor
+        for room in self._rooms:
+            # only have to draw the walls, right?
+            for wall in room.walls:
+                for point in wall.points:
+                    self.tiles[point] = tile.Wall()
 
 def room_from_wall(wall, width, height):
     """

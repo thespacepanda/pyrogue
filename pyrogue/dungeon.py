@@ -21,7 +21,7 @@ class Dungeon(object):
     """
     def __init__(self):
         self._rooms = []
-        self._walls = []
+        self.shared_walls = []
         self._doors = []
 
         self.width_range = []
@@ -35,11 +35,9 @@ class Dungeon(object):
         self.build()
     def add_room(self, room):
         """
-        Takes care of adding rooms and walls simultaneously.
+        Takes care of adding rooms and ranges simultaneously.
         """
         self._rooms.append(room)
-        for wall in room.walls:
-            self._walls.append(wall.to_tuple())
         start = room.start
         end = room.end
         self.width_range.append((start.x, end.x))
@@ -80,23 +78,18 @@ class Dungeon(object):
         while len(self._rooms) < 10:
             # we will remove walls from the list once we build
             # beside them
-            current_wall = to_wall(random.choice(self._walls))
-            print("current wall is: {}".format(current_wall))
-            width = 10 #random.randrange(10, 50)
-            height = 10 #random.randrange(10, 50)
-            print("size is: {}, {}".format(width, height))
-            room = room_from_wall(current_wall, width, height)
-            print("room is: {}".format(room))
+            current_room = random.choice(self._rooms)
+            current_wall = random.choice(current_room.walls)
+            # all same size is a little boring, but otherwise they
+            # collide atm
+            room = room_from_wall(current_wall, 10, 10)
 
             if self.can_add(room):
                 print("CAN ADD")
-                self._walls.remove(current_wall.to_tuple())
-                print("removed wall")
                 self.add_room(room)
+                self.shared_walls.append(current_wall)
                 print("added room")
             else:
-                print("couldn't add room")
-                print("WALLS: {}".format(len(self._walls)))
                 continue
         self.finalize()
     def finalize(self):
@@ -113,6 +106,8 @@ class Dungeon(object):
             for wall in room.walls:
                 for point in wall.points:
                     self.tiles[point] = tile.Wall()
+        for wall in self.shared_walls:
+            self.tiles[wall.center.to_tuple()] = tile.Floor()
 
 def room_from_wall(wall, width, height):
     """

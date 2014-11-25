@@ -77,13 +77,13 @@ class Dungeon(object):
         Bulk of generation algorithm; chooses random wall and
         builds adjacent room.
         """
-        while len(self._rooms) < 100:
+        while len(self._rooms) < 10:
             # we will remove walls from the list once we build
             # beside them
             current_wall = to_wall(random.choice(self._walls))
             print("current wall is: {}".format(current_wall))
-            width = random.randrange(2, 10)
-            height = random.randrange(2, 10)
+            width = 10 #random.randrange(10, 50)
+            height = 10 #random.randrange(10, 50)
             print("size is: {}, {}".format(width, height))
             room = room_from_wall(current_wall, width, height)
             print("room is: {}".format(room))
@@ -210,13 +210,15 @@ class Wall(object):
         This fills our internal list with the points between our
         start point and end point
         """
-        x_values = range(self.start.x, self.end.x)
-        y_values = range(self.start.y, self.end.y)
-        # range() isn't inclusive, so we'll need to add the end
-        # point after we're done
-        self.points = [Point(x, y).to_tuple() for x in x_values
-                       for y in y_values]
+        self.points = []
+        if self.north or self.south:
+            for x in range(self.start.x, self.end.x):
+                self.points.append(Point(x, self.start.y).to_tuple())
+        else:
+            for y in range(self.start.y, self.end.y):
+                self.points.append(Point(self.start.x, y).to_tuple())
         self.points.append(self.end.to_tuple())
+        print(self.points)
     def within(self, point):
         """
         Queries whether a point is on the wall.

@@ -38,3 +38,9 @@ class Wire(Jewelry):
     def __init__(self):
         self.character = b'&'
         self.color = colors.RED
+class Coal(Jewelry):
+    """Coal for making steam to run machines"""
+    def __init__(self):
+        self.character = b'C'
+        self.color = colors.RED
+

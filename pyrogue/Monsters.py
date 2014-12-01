@@ -20,7 +20,7 @@ class SteamElephant(Monsters):
     def __init__(self):
         super().__init__(True)
         self.character = b'M;'
-        self.color = colors.YELLOW
+        self.color = colors.WHITE
 
 class DrillSnake(Monster):
     """A mechanical snake with a drill head used for tunneling"""
@@ -33,7 +33,7 @@ class Airship(Monster):
     """A Flying Machine used for security"""
     def __init__(self):
         super().__init__(False)
-        self.character = b')!('
+        self.character = b'><'
         self.color = colors.RED
 
 class Locomonster(Monster):
@@ -41,7 +41,7 @@ class Locomonster(Monster):
     def __init__(self):
         super().__init__(False)
         self.character = b'o=o=o=b'
-        self.color = colors.RED
+        self.color = colors.YELLOW
 
 class robug(Monster):
     """A giant mechanincal bug used for...I have no idea."""
@@ -49,3 +49,4 @@ class robug(Monster):
         super().__init__(False)
         self.character = b'mmmm"'
         self.color = colors.GREEN
+

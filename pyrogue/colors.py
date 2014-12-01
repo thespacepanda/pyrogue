@@ -14,3 +14,5 @@ WHITE = libtcod.white
 RED = libtcod.red
 ORANGE = libtcod.orange
 BLUE = libtcod.blue
+YELLOW = libtcod.yellow
+GREEN = libtcod.green

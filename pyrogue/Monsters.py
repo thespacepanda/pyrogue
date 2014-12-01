@@ -1,5 +1,5 @@
 """
-    pyrogue.weapon
+    pyrogue.monsters
     ~~~~~~~~~~~~
 
     This module represents drawable objects which are not static - they can be interacted with.

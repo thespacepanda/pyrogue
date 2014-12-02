@@ -8,12 +8,10 @@
 import colors
 
 class Jewelry(Entity):
-    """This takes a character, a color, and a tuple as the map position"""
-    def __init__(self, obstacle, opaque=None):
-        self.obstacle = obstacle
-        if opaque is None:
-            opaque = obstacle
-        self.opaque = opaque
+    """Models jewelry"""
+    def __init__(self):
+        self.obstacle = False
+        self.opaque = False
 
 class Gear(Jewelry):
     """A gear from a robot"""
@@ -24,23 +22,23 @@ class Gear(Jewelry):
 class Diamond(Jewelry):
     """A Diamond"""
     def __init__(self):
-        self.character = b'<>'
+        self.character = b'*'
         self.color = colors.RED
 
 class Pearl(Jewelry):
     """A Pearl"""
     def __init__(self):
-        self.character = b'O'
+        self.character = b'*'
         self.color = colors.WHITE
 
 class Wire(Jewelry):
     """Wire from a robot"""
     def __init__(self):
-        self.character = b'&'
+        self.character = b'-'
         self.color = colors.RED
 class Coal(Jewelry):
     """Coal for making steam to run machines"""
     def __init__(self):
-        self.character = b'C'
+        self.character = b'%'
         self.color = colors.RED
 

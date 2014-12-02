@@ -72,10 +72,10 @@ class Level(object):
         else:
             stair = tile.DownStair
         stairs = []
-        empty_tiles = [tile for tile in self.tiles if self.is_empty(tile)]
         valid_tiles = [tile for room in self.dungeon._rooms for tile in room.points]
+        empty_tiles = [tile for tile in valid_tiles if self.is_empty(tile)]
         for _ in range(self.stair_limit):
-            new_stair = random.choice(valid_tiles)
+            new_stair = random.choice(empty_tiles)
             stairs.append(new_stair)
             self.tiles[(new_stair)] = stair()
         return stairs

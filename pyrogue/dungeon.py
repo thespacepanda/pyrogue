@@ -85,10 +85,8 @@ class Dungeon(object):
             room = room_from_wall(current_wall, 10, 10)
 
             if self.can_add(room):
-                print("CAN ADD")
                 self.add_room(room)
                 self.shared_walls.append(current_wall)
-                print("added room")
             else:
                 continue
         self.finalize()
@@ -213,7 +211,6 @@ class Wall(object):
             for y in range(self.start.y, self.end.y):
                 self.points.append(Point(self.start.x, y).to_tuple())
         self.points.append(self.end.to_tuple())
-        print(self.points)
     def within(self, point):
         """
         Queries whether a point is on the wall.

@@ -19,9 +19,7 @@ class World(object):
         self._map = Map()
         starting_pos = self._starting_pos()
         self.player = player.Player(starting_pos)
-        #self.tiles = self._map.current_level.tiles
-        self.dungeon = dungeon.Dungeon()
-        self.tiles = self.dungeon.tiles
+        self.tiles = self._map.current_level.tiles
         self.entities = {starting_pos: self.player}
     def _starting_pos(self):
         """This puts the player beside some upward stairs"""
@@ -60,20 +58,12 @@ class Map(object):
 class Level(object):
     """A single level, has more meta-data than just a matrix."""
     def __init__(self, down_stairs=None):
+        self.dungeon = dungeon.Dungeon()
+        self.tiles = self.dungeon.tiles
         self.stair_limit = 4
-        self.carve_level()
         if down_stairs is None:
-            generator = self.stair_gen("up")
-            self.up_stairs = [pos for pos in generator]
+            self.up_stairs = self.stair_gen("up")
         self.down_stairs = self.stair_gen("down")
-    def carve_level(self):
-        self.tiles = {}
-        for width in range(constants.MAP_WIDTH):
-            for height in range(constants.MAP_HEIGHT):
-                # Fill map with unblocked tiles
-                self.tiles[(width, height)] = tile.Floor()
-        self.tiles[(30, 22)] = tile.Wall()
-        self.tiles[(50, 22)] = tile.Wall()
     def is_empty(self, position):
         return not self.tiles[position].obstacle
     def stair_gen(self, direction):
@@ -83,8 +73,9 @@ class Level(object):
             stair = tile.DownStair
         stairs = []
         empty_tiles = [tile for tile in self.tiles if self.is_empty(tile)]
+        valid_tiles = [tile for room in self.dungeon._rooms for tile in room.points]
         for _ in range(self.stair_limit):
-            new_stair = random.choice(empty_tiles)
+            new_stair = random.choice(valid_tiles)
             stairs.append(new_stair)
             self.tiles[(new_stair)] = stair()
         return stairs

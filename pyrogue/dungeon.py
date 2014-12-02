@@ -79,6 +79,8 @@ class Dungeon(object):
             # we will remove walls from the list once we build
             # beside them
             current_room = random.choice(self._rooms)
+            while len(current_room.walls) == 0:
+                current_room = random.choice(self._rooms)
             current_wall = random.choice(current_room.walls)
             # all same size is a little boring, but otherwise they
             # collide atm
@@ -87,6 +89,7 @@ class Dungeon(object):
             if self.can_add(room):
                 self.add_room(room)
                 self.shared_walls.append(current_wall)
+                current_room.blacklist_wall(current_wall)
             else:
                 continue
         self.finalize()
@@ -101,7 +104,7 @@ class Dungeon(object):
                 # Initialize map to all floor
         for room in self._rooms:
             # only have to draw the walls, right?
-            for wall in room.walls:
+            for wall in room._walls:
                 for point in wall.points:
                     self.tiles[point] = tile.Wall()
         for wall in self.shared_walls:
@@ -152,6 +155,8 @@ class Room(Rect):
         self.east = Wall("East", self.top_right, self.end)
         self.west = Wall("West", self.start, self.bottom_left)
         self.walls = [self.north, self.south, self.east, self.west]
+        # need a copy that we won't change
+        self._walls = [wall for wall in self.walls]
     def populate(self):
         """
         This fills our internal list with the points between our
@@ -169,6 +174,11 @@ class Room(Rect):
         Queries whether a point is inside the room.
         """
         return point.to_tuple() in self.points
+    def blacklist_wall(self, wall):
+        """
+        Removes a wall from our acting list.
+        """
+        self.walls.remove(wall)
 
 class Wall(object):
     """

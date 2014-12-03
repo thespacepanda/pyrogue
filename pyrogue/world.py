@@ -10,6 +10,7 @@ import player
 import tile
 import constants
 import dungeon
+import monsters
 
 import random
 
@@ -20,7 +21,9 @@ class World(object):
         starting_pos = self._starting_pos()
         self.player = player.Player(starting_pos)
         self.tiles = self._map.current_level.tiles
+        self.valid_tiles = self._map.current_level.empty_tiles
         self.entities = {starting_pos: self.player}
+        self.spawn_monsters()
     def _starting_pos(self):
         """This puts the player beside some upward stairs"""
         stairs = (pos for pos in self._map.current_level.up_stairs)
@@ -33,6 +36,14 @@ class World(object):
         pass
     def blocked(self, pos):
         return not self._map.is_empty(pos) or pos in self.entities
+    def spawn_monsters(self):
+        """
+        This spawns a random number of enemies in the empty space.
+        """
+        for monster in range(10):
+            monster_class = random.choice(monsters.MONSTER_TYPES)
+            position = random.choice([tile for tile in self.valid_tiles])
+            self.entities[position] = monster_class()
 
 class Map(object):
     """The game map, over all the levels."""
@@ -60,6 +71,8 @@ class Level(object):
     def __init__(self, down_stairs=None):
         self.dungeon = dungeon.Dungeon()
         self.tiles = self.dungeon.tiles
+        self.valid_tiles = [tile for room in self.dungeon._rooms for tile in room.points]
+        self.empty_tiles = [tile for tile in self.valid_tiles if self.is_empty(tile)]
         self.stair_limit = 4
         if down_stairs is None:
             self.up_stairs = self.stair_gen("up")

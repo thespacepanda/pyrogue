@@ -7,13 +7,15 @@
 
 import colors
 
-class Monsters(Entity):
+from entity import Entity
+
+class Monster(Entity):
     """This takes a character, a color, and a tuple as the map position"""
     def __init__(self):
         self.obstacle = True
         self.opaque = True
 
-class SteamElephant(Monsters):
+class SteamElephant(Monster):
     """A Steam powered elephant used for hauling cargo"""
     def __init__(self):
         self.character = b'E'
@@ -37,9 +39,10 @@ class Locomonster(Monster):
         self.character = b'L'
         self.color = colors.YELLOW
 
-class robug(Monster):
+class Robug(Monster):
     """A giant mechanincal bug used for...I have no idea."""
     def __init__(self):
         self.character = b'R'
         self.color = colors.GREEN
 
+MONSTER_TYPES = [SteamElephant, DrillSnake, Airship, Locomonster, Robug]

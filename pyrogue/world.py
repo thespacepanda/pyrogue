@@ -11,6 +11,7 @@ import tile
 import constants
 import dungeon
 import monsters
+import weapon
 
 import random
 
@@ -24,6 +25,7 @@ class World(object):
         self.valid_tiles = self._map.current_level.empty_tiles
         self.entities = {starting_pos: self.player}
         self.spawn_monsters()
+ #       self.spawn_weapons()
     def _starting_pos(self):
         """This puts the player beside some upward stairs"""
         stairs = (pos for pos in self._map.current_level.up_stairs)
@@ -44,7 +46,14 @@ class World(object):
             monster_class = random.choice(monsters.MONSTER_TYPES)
             position = random.choice([tile for tile in self.valid_tiles])
             self.entities[position] = monster_class()
-
+    def spawn_weapons(self):
+        """
+        This spawns a random number of weapons in the empty space.
+        """
+        for weapon in range(10):
+            weapon_class = random.choice(weapon.WEAPON_TYPES)
+            position = random.choice([tile for tile in self.valid_tiles])
+            self.entities[position] = weapon_class()
 class Map(object):
     """The game map, over all the levels."""
     def __init__(self):

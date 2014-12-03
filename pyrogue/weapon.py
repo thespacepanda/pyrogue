@@ -7,38 +7,35 @@
 
 import colors
 
+from entity import Entity
+
 class Weapon(Entity):
     """This takes a character, a color, and a tuple as the map position"""
-    def __init__(self, obstacle, opaque=None):
-        self.obstacle = obstacle
-        if opaque is None:
-            opaque = obstacle
-        self.opaque = opaque
+    def __init__(self):
+        self.obstacle = True
+        self.opaque = True
 
 class Sword(Weapon):
     """A sword"""
     def __init__(self):
-        super().__init__(True)
         self.character = b'|'
         self.color = colors.RED
 
 class Ax(Weapon):
     """An ax"""
     def __init__(self):
-        super().__init__(False)
         self.character = b'T'
         self.color = colors.RED
 
 class Spear(Weapon):
     """A Spear"""
     def __init__(self):
-        super().__init__(False)
         self.character = b'--~'
         self.color = colors.RED
 
 class Mace(Weapon):
     """A Mace"""
     def __init__(self):
-        super().__init__(False)
-        self.character = b'/O'
+        self.character = b'/*'
         self.color = colors.RED
+WEAPON_TYPES = [Sword, Ax, Spear, Mace]

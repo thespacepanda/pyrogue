@@ -17,8 +17,8 @@ class Monster(Entity):
         super().__init__(b'M', colors.WHITE, pos)
         self.obstacle = True
         self.opaque = True
-        self.health = 5
-        self.attack = 5
+        self.health = random.randrange(5, 11)
+        self.attack = random.randrange(5, 11)
     def follow(self, pos):
         my_x, my_y = self.pos
         mon_x, mon_y = pos

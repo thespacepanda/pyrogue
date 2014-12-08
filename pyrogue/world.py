@@ -48,6 +48,7 @@ class World(object):
                     pass
             except KeyError:
                 continue
+        self.player.regen()
     def blocked(self, pos):
         return not self._map.is_empty(pos) or pos in self.entities
     def spawn_monsters(self):

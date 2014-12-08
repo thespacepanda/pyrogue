@@ -52,7 +52,9 @@ class Player(Entity):
             for height in range(y-5, y+6):
                 if (width, height) not in self.explored:
                     self.explored.append((width, height))
-            
+    def regen(self):
+        if self.health < self.max_health:
+            self.health += 1        
     def quit(self, sure):
         """Sets self.exit to True so that we can exit."""
         if sure:

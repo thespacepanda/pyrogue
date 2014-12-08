@@ -18,6 +18,7 @@ class Entity(object):
         self.pos = pos
         self.name = "Player"
         self.health = random.randrange(25, 36)
+        self.max_health = self.health
         self.attack = random.randrange(10, 16)
     def move(self, vector, world):
         dx, dy = vector

@@ -35,6 +35,9 @@ class World(object):
                     return position
         raise Exception("Nowhere to put player...")
     def update(self):
+        for pos in self.entities.copy():
+            if self.entities[pos].health <= 0:
+                del self.entities[pos]
         for tile in self.player.explored:
             try:
                 monster = self.entities[tile]

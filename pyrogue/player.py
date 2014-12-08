@@ -31,7 +31,8 @@ class Player(Entity):
         self.update_explored()
     def interact(self, world):
         """Handles key input."""
-        key = libtcod.console_check_for_keypress(True)
+        key = libtcod.Key()
+        libtcod.sys_wait_for_event(libtcod.EVENT_KEY_PRESS, key, libtcod.Mouse(), True)
         try:
             func, val = self.key_map[key.vk]
             if val is None:

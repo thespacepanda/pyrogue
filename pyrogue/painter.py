@@ -9,6 +9,8 @@ import libtcodpy as libtcod
 
 import constants
 
+import colors
+
 class Painter(object):
     """This takes a world and prints it to the screen."""
     def __init__(self):
@@ -40,8 +42,18 @@ class Painter(object):
                 libtcod.console_put_char(self.console, x, y, entity.character, libtcod.BKGND_NONE)
             except KeyError:
                 continue
+        self.paint_health(world)
         self._blit()
         self._flush()
+    def paint_health(self, world):
+        height = 48 # below map
+        center_x = 40
+        health = world.player.health
+        start_x = center_x - (health // 2)
+        end_x = start_x + health
+        for width in range(start_x, end_x + 1):
+            libtcod.console_set_default_foreground(self.console, colors.GREEN)
+            libtcod.console_put_char(self.console, width, height, b'#', libtcod.BKGND_NONE)
     def _blit(self):
         """Blits self.console to the root console."""
         libtcod.console_blit(self.console, 0, 0, self.width,

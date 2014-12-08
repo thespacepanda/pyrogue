@@ -25,7 +25,6 @@ class World(object):
         self.player = player.Player(starting_pos)
         self.entities = {starting_pos: self.player}
         self.spawn_monsters()
- #       self.spawn_weapons()
     def _starting_pos(self):
         """This puts the player beside some upward stairs"""
         stairs = (pos for pos in self._map.current_level.up_stairs)
@@ -37,6 +36,8 @@ class World(object):
     def update(self):
         for pos in self.entities.copy():
             if self.entities[pos].health <= 0:
+                if self.entities[pos] == self.player:
+                    self.player.quit(True)
                 del self.entities[pos]
         for tile in self.player.explored:
             try:

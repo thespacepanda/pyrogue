@@ -25,7 +25,7 @@ class Player(Entity):
             libtcod.KEY_LEFT: (self.move, (-1, 0)),
             libtcod.KEY_RIGHT: (self.move, (1, 0)),
             libtcod.KEY_ESCAPE: (self.quit, True),
-            libtcod.KEY_ENTER: (self.fullscreen, None)
+            libtcod.KEY_ENTER: (self.fullscreen, None),
         }
         self.explored = []
         self.update_explored()

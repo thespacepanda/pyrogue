@@ -9,12 +9,16 @@ import colors
 
 from entity import Entity
 
+import random
+
 class Monster(Entity):
     """This takes a character, a color, and a tuple as the map position"""
     def __init__(self, pos):
         super().__init__(b'M', colors.WHITE, pos)
         self.obstacle = True
         self.opaque = True
+        self.health = 5
+        self.attack = 5
     def follow(self, pos):
         my_x, my_y = self.pos
         mon_x, mon_y = pos

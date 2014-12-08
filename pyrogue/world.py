@@ -35,7 +35,16 @@ class World(object):
                     return position
         raise Exception("Nowhere to put player...")
     def update(self):
-        pass
+        for tile in self.player.explored:
+            try:
+                monster = self.entities[tile]
+                try:
+                    new_pos = monster.follow(self.player.pos)
+                    monster.move(new_pos, self)
+                except AttributeError:
+                    pass
+            except KeyError:
+                continue
     def blocked(self, pos):
         return not self._map.is_empty(pos) or pos in self.entities
     def spawn_monsters(self):
@@ -45,7 +54,7 @@ class World(object):
         for monster in range(10):
             monster_class = random.choice(monsters.MONSTER_TYPES)
             position = random.choice([tile for tile in self.valid_tiles])
-            self.entities[position] = monster_class()
+            self.entities[position] = monster_class(position)
     def spawn_weapons(self):
         """
         This spawns a random number of weapons in the empty space.

@@ -23,15 +23,23 @@ class Painter(object):
         """Iterates through drawables in world and paints them to the screen."""
         #camera = world.player.get_camera()
 
-        for position, tile in world.tiles.items():
+        explored_tiles = world.player.explored
+
+        for position in explored_tiles:
             x, y = position
+            try:
+                tile = world.tiles[position]
+            except KeyError:
+                continue
+            
             libtcod.console_set_default_foreground(self.console, tile.color)
             libtcod.console_put_char(self.console, x, y, tile.character, libtcod.BKGND_NONE)
-        for position, entity in world.entities.items():
-            x, y = position
-            libtcod.console_set_default_foreground(self.console, entity.color)
-            libtcod.console_put_char(self.console, x, y, entity.character,
-                                     libtcod.BKGND_NONE)
+            try:
+                entity = world.entities[position]
+                libtcod.console_set_default_foreground(self.console, entity.color)
+                libtcod.console_put_char(self.console, x, y, entity.character, libtcod.BKGND_NONE)
+            except KeyError:
+                continue
         self._blit()
         self._flush()
     def _blit(self):

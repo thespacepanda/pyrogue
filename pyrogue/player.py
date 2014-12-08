@@ -27,6 +27,8 @@ class Player(Entity):
             libtcod.KEY_ESCAPE: (self.quit, True),
             libtcod.KEY_ENTER: (self.fullscreen, None)
         }
+        self.explored = []
+        self.update_explored()
     def interact(self, world):
         """Handles key input."""
         key = libtcod.console_check_for_keypress(True)
@@ -40,7 +42,15 @@ class Player(Entity):
                 func(val)
         except KeyError:
             pass
-
+    def update_explored(self):
+        """
+        Updates the list of explored tiles.
+        """
+        x, y = self.pos
+        for width in range(x-5, x+6):
+            for height in range(y-5, y+6):
+                if (width, height) not in self.explored:
+                    self.explored.append((width, height))
             
     def quit(self, sure):
         """Sets self.exit to True so that we can exit."""

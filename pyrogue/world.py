@@ -20,9 +20,9 @@ class World(object):
     def __init__(self):
         self._map = Map()
         starting_pos = self._starting_pos()
-        self.player = player.Player(starting_pos)
         self.tiles = self._map.current_level.tiles
         self.valid_tiles = self._map.current_level.empty_tiles
+        self.player = player.Player(starting_pos)
         self.entities = {starting_pos: self.player}
         self.spawn_monsters()
  #       self.spawn_weapons()

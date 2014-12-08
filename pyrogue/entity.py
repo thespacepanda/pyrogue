@@ -25,3 +25,4 @@ class Entity(object):
             me = world.entities.pop(self.pos)
             self.pos = new_pos
             world.entities[new_pos] = me
+            self.update_explored()

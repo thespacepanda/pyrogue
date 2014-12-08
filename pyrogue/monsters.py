@@ -26,7 +26,7 @@ class Monster(Entity):
 			new_y = -1
 		elif my_y < mon_y:
 			new_y = 1
-		reurn (new_x, new_y)"""
+		return (new_x, new_y)"""
 
 class SteamElephant(Monster):
     """A Steam powered elephant used for hauling cargo"""

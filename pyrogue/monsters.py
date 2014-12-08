@@ -14,6 +14,19 @@ class Monster(Entity):
     def __init__(self):
         self.obstacle = True
         self.opaque = True
+	"""def follow(self, pos):
+		my_x, my_y = self.pos
+		mon_x, mon_y = pos
+		new_x, new_y = (0,0)
+		if my_x > mon_x:
+			new_x = -1
+		elif my_x < mon_x:
+			new_x = 1
+		if my_y > mon_y:
+			new_y = -1
+		elif my_y < mon_y:
+			new_y = 1
+		reurn (new_x, new_y)"""
 
 class SteamElephant(Monster):
     """A Steam powered elephant used for hauling cargo"""
